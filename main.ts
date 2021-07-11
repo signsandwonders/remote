@@ -5,6 +5,15 @@ input.onButtonPressed(Button.A, function () {
     basic.showString("" + (SPEED))
     basic.showString("% ")
 })
+function readLight () {
+    led.plotBarGraph(
+    input.lightLevel(),
+    255
+    )
+}
+input.onButtonPressed(Button.AB, function () {
+	
+})
 input.onButtonPressed(Button.B, function () {
     if (100 > SPEED) {
         SPEED += 25
@@ -51,16 +60,26 @@ radio.onReceivedValue(function (name, value) {
                 pins.servoWritePin(AnalogPin.P15, 120)
             }
         }
+    } else if (name == "READTEMP") {
+        readTempF()
+    } else if (name == "READLIGHT") {
+        readLight()
     } else {
         basic.showString("RADIO ERROR!")
         basic.showString(name)
     }
 })
+function readTempF () {
+    basic.showNumber(32 + input.temperature() * 1.8)
+    basic.showString("F")
+}
 let RIGHT_MOTOR = 0
 let LEFT_MOTOR = 0
 let SERVO_LEFT_POS = 0
 let SERVO_RIGHT_POS = 0
 let SPEED = 0
+gatorEnvironment.beginEnvironment()
+gatorUV.begin()
 motobit.invert(Motor.Left, true)
 motobit.invert(Motor.Right, true)
 radio.setGroup(1)
