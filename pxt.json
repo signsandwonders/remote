@@ -6,7 +6,7 @@
         "radio": "*",
         "motobit": "github:sparkfun/pxt-moto-bit#406b504d2e3d57b1d154f22b1f8158e1ad728ca3",
         "gamerbit": "github:sparkfun/pxt-gamer-bit#v0.0.7",
-        "gatorEnvironment": "github:sparkfun/pxt-gator-environment#v1.0.13",
+        "gatorEnvironment": "github:sparkfun/pxt-gator-environment#v1.1.2",
         "gatorSoil": "github:sparkfun/pxt-gator-soil#v1.0.3",
         "microphone": "*",
         "gatorUV": "github:sparkfun/pxt-gator-UV#v0.1.2"
@@ -20,7 +20,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "4.0.9",
+        "target": "6.0.25",
         "targetId": "microbit"
     },
     "supportedTargets": [

@@ -1,25 +1,13 @@
 input.onButtonPressed(Button.A, function () {
+    decreaseSpeed()
+})
+function decreaseSpeed () {
     if (0 < SPEED) {
         SPEED += -25
     }
-    basic.showString("" + (SPEED))
-    basic.showString("% ")
-})
-function readLight () {
-    led.plotBarGraph(
-    input.lightLevel(),
-    255
-    )
 }
-input.onButtonPressed(Button.AB, function () {
-	
-})
 input.onButtonPressed(Button.B, function () {
-    if (100 > SPEED) {
-        SPEED += 25
-    }
-    basic.showString("" + (SPEED))
-    basic.showString("% ")
+    increaseSpeed()
 })
 radio.onReceivedValue(function (name, value) {
     if (name == "LEFT") {
@@ -60,18 +48,64 @@ radio.onReceivedValue(function (name, value) {
                 pins.servoWritePin(AnalogPin.P15, 120)
             }
         }
-    } else if (name == "READTEMP") {
-        readTempF()
-    } else if (name == "READLIGHT") {
-        readLight()
+    } else if (name == "SPEED") {
+        if (value == 1) {
+            increaseSpeed()
+        } else {
+            decreaseSpeed()
+        }
     } else {
         basic.showString("RADIO ERROR!")
         basic.showString(name)
     }
 })
-function readTempF () {
-    basic.showNumber(32 + input.temperature() * 1.8)
-    basic.showString("F")
+function showSpeed () {
+    if (SPEED == 25) {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            # . . . .
+            # # . . .
+            # # # . .
+            `)
+    } else if (SPEED == 50) {
+        basic.showLeds(`
+            # . . . .
+            # # . . .
+            # # # . .
+            # # # # .
+            # # # # #
+            `)
+    } else if (SPEED == 75) {
+        basic.showLeds(`
+            # # # . .
+            # # # # .
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
+    } else if (SPEED == 100) {
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
+    } else {
+        basic.showLeds(`
+            . . . . .
+            . # # # .
+            . # . # .
+            . # # # .
+            . . . . .
+            `)
+    }
+}
+function increaseSpeed () {
+    if (100 > SPEED) {
+        SPEED += 25
+    }
 }
 let RIGHT_MOTOR = 0
 let LEFT_MOTOR = 0
@@ -87,5 +121,6 @@ motobit.enable(MotorPower.On)
 SPEED = 50
 SERVO_RIGHT_POS = 0
 SERVO_LEFT_POS = 0
-basic.showString("" + (SPEED))
-basic.showString("% ")
+basic.forever(function () {
+    showSpeed()
+})
